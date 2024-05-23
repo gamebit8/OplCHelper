@@ -16,41 +16,12 @@ namespace WpfApp
             ApplicationVM = new ApplicationViewModel(checksumService);
             DataContext = ApplicationVM;
 
-            //AddDynamicResources();
             ShowWarningAboutUsingAlphaVersion();
-        }
-
-        //private void AddDynamicResources()
-        //{
-        //    var stringResources = GetStringResources();
-        //    var styleResources = GetStyleResources();
-        //    this.Resources.MergedDictionaries.Add(stringResources);
-        //    this.Resources.MergedDictionaries.Add(styleResources);
-        //}
-
-        private static ResourceDictionary GetStringResources()
-        {
-            var dictionary = new ResourceDictionary
-            {
-                Source = new Uri(@"..\Resources\StringResources.ru.xaml", UriKind.Relative)
-            };
-
-            return dictionary;
-        }
-
-        private static ResourceDictionary GetStyleResources()
-        {
-            var dictionary = new ResourceDictionary
-            {
-                Source = new Uri(@"..\Resources\StyleResources.xaml", UriKind.Relative)
-            };
-
-            return dictionary;
         }
 
         private void ShowWarningAboutUsingAlphaVersion()
         {
-            var warning = (string)this.TryFindResource("wawrning");
+            var warning = (string)this.TryFindResource("warning");
             var message = (string)this.TryFindResource("warningMessage");
 
             if (MessageBox.Show(message,
