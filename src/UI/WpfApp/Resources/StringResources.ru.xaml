@@ -1,0 +1,20 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <system:String x:Key="correctChecksum">Корректировка чексуммы</system:String>
+    <system:String x:Key="path">Путь</system:String>
+    <system:String x:Key="status">Статус</system:String>
+    <system:String x:Key="selectChecksumAlgorithm">Выберите алгоритм чексуммы</system:String>
+    <system:String x:Key="clearTheList">Очистить список</system:String>
+    <system:String x:Key="correctCS">Корректировка ЧС</system:String>
+    <system:String x:Key="defineChecksumAlgorithm">Определить алгоритм чексуммы</system:String>
+    <system:String x:Key="algorithm">Алгоритм</system:String>
+    <system:String x:Key="defineAlgorithm">Определить алгоритм</system:String>
+    <system:String x:Key="warning">Предупреждение</system:String>
+    <system:String x:Key="warningMessage">
+        Данная программа находится в начальной стадии разработки.
+        Использование калибровок, отредактированной данной программой, может приводить к увалу блока.
+        Автор программы никакой отвественности не несет, Вы все делаете на свой страх и риск.
+        Я осознаю все риски и хочу продолжить использовать программу
+    </system:String>
+</ResourceDictionary>
