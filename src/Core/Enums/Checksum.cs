@@ -2,7 +2,7 @@
 {
     public enum Checksum
     {
-        None = 0,
+        Unknown = 0,
         Valid,
         Invalid,
         Сhanged,

@@ -28,7 +28,7 @@ namespace ChecksumCorrector.ConsoleApp
                         break;
                     }
 
-                    var result = await _checksumService.ChecksumIsCorrectAsync(path, true);
+                    var result = await _checksumService.ChecksumIsCorrectAsync(path, ChecksumAlgorithm.Unknown, true);
                     var message = result switch
                     {
                         Checksum.Valid => $"{path}: чексумма верна",
