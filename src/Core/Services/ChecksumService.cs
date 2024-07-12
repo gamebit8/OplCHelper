@@ -14,7 +14,7 @@ namespace ChecksumCorrector.Core
         {
             var checksum = new byte[_checksumLengthBytes];
 
-            using FileStream fs = File.OpenRead(path);
+            using FileStream fs = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read);
             await fs.ReadAsync(checksum);
 
             return checksum;
@@ -26,7 +26,7 @@ namespace ChecksumCorrector.Core
 
             var algorithm = await TryGetChecksumAlgorithmFromModifiedFileAsync(path);
 
-            checksum = algorithm == ChecksumAlgorithm.SumOfBigEndian16Bit
+            checksum = algorithm == ChecksumAlgorithm.SumOfBigEndian16BitNot
                 ? await GetChecksumSumOfBigEndian16BitAlgorithmAsync(path)
                 : await GetChecksumSumOfBigEndian16BitPlusOneAsync(path);
 
@@ -36,7 +36,7 @@ namespace ChecksumCorrector.Core
         public async Task<ChecksumAlgorithm> GetChecksumAlgorithmFromOriginalFileAsync(string path)
         {
             if (!IsCalibrationFile(path))
-                return ChecksumAlgorithm.None;
+                return ChecksumAlgorithm.Unknown;
 
             var sum = await GetSumOfBigEndianAsync(path, 0);
 
@@ -45,9 +45,9 @@ namespace ChecksumCorrector.Core
 
             return lastTwoByteChecksum switch
             {
-                "0000" => ChecksumAlgorithm.SumOfBigEndian16Bit,
-                "ffff" => ChecksumAlgorithm.SumOfBigEndian16BitPlusOne,
-                _ => ChecksumAlgorithm.None
+                "ffff" => ChecksumAlgorithm.SumOfBigEndian16BitNot,
+                "0000" => ChecksumAlgorithm.SumOfBigEndian16BitNotPlusOne,
+                _ => ChecksumAlgorithm.Unknown
             };
         }
 
@@ -65,15 +65,18 @@ namespace ChecksumCorrector.Core
         {
             var lengthBuffer = 1;
 
-            using var fs = new FileStream(path, FileMode.Open);
+            using var fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
             var buffer = new byte[lengthBuffer];
             fs.Seek(-lengthBuffer, SeekOrigin.End);
             await fs.ReadAsync(buffer);
 
             if (buffer[0] == 255)
-                return ChecksumAlgorithm.SumOfBigEndian16BitPlusOne;
+                return ChecksumAlgorithm.SumOfBigEndian16BitNot;
 
-            return ChecksumAlgorithm.SumOfBigEndian16Bit;
+            if (buffer[0] == 0) 
+                return ChecksumAlgorithm.SumOfBigEndian16BitNotPlusOne;
+
+            return ChecksumAlgorithm.Unknown;
         }
 
         public async Task<byte[]> GetChecksumSumOfBigEndian16BitAlgorithmAsync(string path)
@@ -93,7 +96,7 @@ namespace ChecksumCorrector.Core
             uint sum = 0;
             var buffer = new byte[_readBufferLengthInBytes];
 
-            using (FileStream fs = File.OpenRead(path))
+            using (FileStream fs = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
                 fs.Seek(offset, SeekOrigin.Begin);
 
@@ -153,37 +156,28 @@ namespace ChecksumCorrector.Core
             return tempChecksum;
         }
 
-        public async Task<Checksum> ChecksumIsCorrectAsync(string path, bool createAFileWithTheCorrectChecksum = false)
+        public async Task<Checksum> ChecksumIsCorrectAsync(string path, ChecksumAlgorithm checksumAlgorithm = ChecksumAlgorithm.Unknown, bool createAFileWithTheCorrectChecksum = false)
         {
             if (!IsCalibrationFile(path))
-                return Checksum.None;
+                return Checksum.Unknown;
 
             byte[] originalChecksum = await GetOriginalChecksumAsync(path);
-            byte[] correctedChecksum = await GetCorrectedChecksumAsync(path);
-
+            byte[] correctedChecksum = checksumAlgorithm switch
+                {
+                    ChecksumAlgorithm.SumOfBigEndian16BitNot => await GetChecksumSumOfBigEndian16BitAlgorithmAsync(path),
+                    ChecksumAlgorithm.SumOfBigEndian16BitNotPlusOne => await GetChecksumSumOfBigEndian16BitPlusOneAsync(path),
+                    _ => await GetCorrectedChecksumAsync(path)
+                };
+           
             if (!Enumerable.SequenceEqual(originalChecksum, correctedChecksum) && createAFileWithTheCorrectChecksum)
             {
                 await CreateFileWithCorrectChecksumAsync(path, correctedChecksum);
                 return Checksum.Сhanged;
             }
 
-            return Checksum.Valid;
-        }
-
-        public async Task<Checksum> ChecksumIsCorrectAsync(string path, ChecksumAlgorithm checksumAlgorithm, bool createAFileWithTheCorrectChecksum)
-        {
-            if (!IsCalibrationFile(path) || checksumAlgorithm == ChecksumAlgorithm.None)
-                return Checksum.None;
-
-            byte[] originalChecksum = await GetOriginalChecksumAsync(path);
-            byte[] correctedChecksum = checksumAlgorithm == ChecksumAlgorithm.SumOfBigEndian16Bit
-                ? await GetChecksumSumOfBigEndian16BitAlgorithmAsync(path)
-                : await GetChecksumSumOfBigEndian16BitPlusOneAsync(path);
-
-            if (!Enumerable.SequenceEqual(originalChecksum, correctedChecksum) && createAFileWithTheCorrectChecksum)
+            if(!Enumerable.SequenceEqual(originalChecksum, correctedChecksum) && !createAFileWithTheCorrectChecksum)
             {
-                await CreateFileWithCorrectChecksumAsync(path, correctedChecksum);
-                return Checksum.Сhanged;
+                return Checksum.Invalid;
             }
 
             return Checksum.Valid;

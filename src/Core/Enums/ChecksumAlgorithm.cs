@@ -2,8 +2,8 @@
 {
     public enum ChecksumAlgorithm
     {
-        None = 0,
-        SumOfBigEndian16Bit,
-        SumOfBigEndian16BitPlusOne,
+        Unknown = 0,
+        SumOfBigEndian16BitNot,
+        SumOfBigEndian16BitNotPlusOne,
     }
 }

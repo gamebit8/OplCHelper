@@ -119,14 +119,14 @@ namespace WpfApp.ViewModels
             {
                 return correctChecksumsCommand ??= new RelayCommand(async obj =>
                 {
-                    if (CorrectChecksumFiles.Count > 0 && selectedChecksumAlgorithm != ChecksumAlgorithm.None)
+                    if (CorrectChecksumFiles.Count > 0 && selectedChecksumAlgorithm != ChecksumAlgorithm.Unknown)
                     {
                         switch (SelectedChecksumAlgorithm)
                         {
-                            case ChecksumAlgorithm.SumOfBigEndian16Bit:
+                            case ChecksumAlgorithm.SumOfBigEndian16BitNot:
                                 await CorrectCheksumFilesWithSumOfBigEndian16BitAlgorithmAsync(CorrectChecksumFiles);
                                 break;
-                            case ChecksumAlgorithm.SumOfBigEndian16BitPlusOne:
+                            case ChecksumAlgorithm.SumOfBigEndian16BitNotPlusOne:
                                 await CorrectCheksumFilesWithSumOfBigEndian16BitPlusOneAlgorithmAsync(CorrectChecksumFiles);
                                 break;
                         }
@@ -138,13 +138,13 @@ namespace WpfApp.ViewModels
         private async Task CorrectCheksumFilesWithSumOfBigEndian16BitAlgorithmAsync(ObservableCollection<CalibrationFileWithСhecksumStatus> files)
         {
             foreach (var file in files)
-                file.ChecksumStatus = await _checksumService.ChecksumIsCorrectAsync(file.Path, ChecksumAlgorithm.SumOfBigEndian16Bit, true);
+                file.ChecksumStatus = await _checksumService.ChecksumIsCorrectAsync(file.Path, ChecksumAlgorithm.SumOfBigEndian16BitNot, true);
         }
 
         private async Task CorrectCheksumFilesWithSumOfBigEndian16BitPlusOneAlgorithmAsync(ObservableCollection<CalibrationFileWithСhecksumStatus> files)
         {
             foreach (var file in files)
-                file.ChecksumStatus = await _checksumService.ChecksumIsCorrectAsync(file.Path, ChecksumAlgorithm.SumOfBigEndian16BitPlusOne, true);
+                file.ChecksumStatus = await _checksumService.ChecksumIsCorrectAsync(file.Path, ChecksumAlgorithm.SumOfBigEndian16BitNotPlusOne, true);
         }
 
         public ICommand ClearCorrectСhecksumСalibrationFilesCommand

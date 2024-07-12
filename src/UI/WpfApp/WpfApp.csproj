@@ -9,6 +9,8 @@
     <AssemblyVersion>0.1</AssemblyVersion>
 	<Version>0.1-alfa</Version>
 	<FileVersion>0.1</FileVersion>
+	<ApplicationIcon>Images\app.ico</ApplicationIcon>
+	<IncludeNativeLibrariesForSelfExtract >true</IncludeNativeLibrariesForSelfExtract>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,6 +27,10 @@
 	
     <ItemGroup>
 	    <ApplicationDefinition Remove="App.xaml" />
+    </ItemGroup>
+	
+    <ItemGroup>
+      <Content Include="Images\app.ico" />
     </ItemGroup>
 	
 	<ItemGroup>
