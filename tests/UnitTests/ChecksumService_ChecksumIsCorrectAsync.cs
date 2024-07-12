@@ -21,14 +21,18 @@ namespace UnitTests
             var modifiedFilePath = GetModifiedFilePath(filePath);
 
             var checksumStatus = await checksumService.ChecksumIsCorrectAsync(filePath, checksumAlgorithm, true);
+            var newFileIsCreate = File.Exists(modifiedFilePath);
 
-            using(var fs = File.Open(modifiedFilePath, FileMode.Open))
+            using (var fs = File.Open(modifiedFilePath, FileMode.Open))
             {
                 await fs.ReadAsync(result);
             }
 
             Assert.Equal(expect, result);
             Assert.Equal(Checksum.Сhanged, checksumStatus);
+            Assert.True(newFileIsCreate);
+
+            File.Delete(modifiedFilePath);
         }
 
 
