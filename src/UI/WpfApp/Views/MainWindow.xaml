@@ -45,8 +45,8 @@
                     <Grid Visibility="{Binding CorrectChecksumFiles.IsEmpty, Converter={StaticResource booleanVisibilityConverter}}">
                         <Label Content="{DynamicResource selectChecksumAlgorithm}" ></Label>
                         <StackPanel Style="{DynamicResource selectChecksumAlgoritmStyle}" x:Name="selectChecksumAlgoritm" Orientation="Horizontal" Margin="0 30 0 15">
-                            <RadioButton GroupName="ChecksumAlgorithm" Command="{Binding SetSelectedChecksumAlgorithmCommand}" CommandParameter="{x:Static core:ChecksumAlgorithm.SumOfBigEndian16BitNot}" Content="SumOfBigEndian16Bit"/>
-                            <RadioButton GroupName="ChecksumAlgorithm" Command="{Binding SetSelectedChecksumAlgorithmCommand}" CommandParameter="{x:Static core:ChecksumAlgorithm.SumOfBigEndian16BitNotPlusOne}" Content="SumOfBigEndian16BitPlusOne"/>
+                            <RadioButton GroupName="ChecksumAlgorithm" Command="{Binding SetSelectedChecksumAlgorithmCommand}" CommandParameter="{x:Static core:ChecksumAlgorithm.SumOfBigEndian16BitNot}" Content="{DynamicResource sumOfBigEndian16BitNot}"/>
+                            <RadioButton GroupName="ChecksumAlgorithm" Command="{Binding SetSelectedChecksumAlgorithmCommand}" CommandParameter="{x:Static core:ChecksumAlgorithm.SumOfBigEndian16BitNotPlusOne}" Content="{DynamicResource sumOfBigEndian16BitNotPlusOne}"/>
                         </StackPanel>
                     </Grid>
                     <Grid Visibility="{Binding CorrectChecksumFiles.IsEmpty, Converter={StaticResource booleanVisibilityConverter}}">
