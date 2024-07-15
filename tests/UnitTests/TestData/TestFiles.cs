@@ -18,28 +18,28 @@ namespace UnitTests.Consts
             var files = new Dictionary<TestFileTypes, TestFile>();
 
             files.Add(TestFileTypes.SumOfBigEndian16BitNotOrig, new TestFile() {
-                Path = "TestFiles\\SumOfBigEndian16Bit_orig",
+                Path = "TestFiles\\SumOfBigEndian16BitNot_orig",
                 ChecksumAlgorithm = ChecksumAlgorithm.SumOfBigEndian16BitNot,
                 СhecksumInFile = [71, 193],
                 СorrectСhecksum = [71, 193]
             });
 
             files.Add(TestFileTypes.SumOfBigEndian16BitNotEdit, new TestFile() {
-                Path = "TestFiles\\SumOfBigEndian16Bit_edit",
+                Path = "TestFiles\\SumOfBigEndian16BitNot_edit",
                 ChecksumAlgorithm = ChecksumAlgorithm.SumOfBigEndian16BitNot,
                 СhecksumInFile = [71, 193],
                 СorrectСhecksum = [71, 185]
             });
 
             files.Add(TestFileTypes.SumOfBigEndian16BitNotPlusOneOrig, new TestFile() {
-                Path = "TestFiles\\SumOfBigEndian16BitPlusOne_orig",
+                Path = "TestFiles\\SumOfBigEndian16BitNotPlusOne_orig",
                 ChecksumAlgorithm = ChecksumAlgorithm.SumOfBigEndian16BitNotPlusOne,
                 СhecksumInFile = [159, 164],
                 СorrectСhecksum = [159, 164]
             });
 
             files.Add(TestFileTypes.SumOfBigEndian16BitNotPlusOneEdit, new TestFile() {
-                Path = "TestFiles\\SumOfBigEndian16BitPlusOne_edit",
+                Path = "TestFiles\\SumOfBigEndian16BitNotPlusOne_edit",
                 ChecksumAlgorithm = ChecksumAlgorithm.SumOfBigEndian16BitNotPlusOne,
                 СhecksumInFile = [105, 28],
                 СorrectСhecksum = [169, 164]
