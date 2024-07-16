@@ -89,7 +89,7 @@ namespace WpfApp.ViewModels
 
         private void ChangeMaxHeightDataGridAfterWindowsResize(double NewWindowHeight)
         {
-            maxHeightDataGrid = NewWindowHeight - 200;
+            MaxHeightDataGrid = NewWindowHeight - 200;
         }
 
         public ChecksumAlgorithm SelectedChecksumAlgorithm

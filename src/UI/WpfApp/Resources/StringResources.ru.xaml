@@ -11,6 +11,8 @@
     <system:String x:Key="algorithm">Алгоритм</system:String>
     <system:String x:Key="defineAlgorithm">Определить алгоритм</system:String>
     <system:String x:Key="warning">Предупреждение</system:String>
+    <system:String x:Key="sumOfBigEndian16BitNot">SumOfBigEndian16BitNot</system:String>
+    <system:String x:Key="sumOfBigEndian16BitNotPlusOne">SumOfBigEndian16BitNotPlusOne</system:String>
     <system:String x:Key="warningMessage">
         Данная программа находится в начальной стадии разработки.
         Использование калибровок, отредактированной данной программой, может приводить к увалу блока.
