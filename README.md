@@ -20,7 +20,7 @@
 Возможные статусы выполненной задачи:
 1. **Unknown** Файл не является оригинальным файлом калибровки.
 2. **SumOfBigEndian16BitNot** Для расчета ЧС файла используется алгоритм SumOfBigEndian16BitNot.
-3. **SumOfBigEndian16BitNotPlusOne** Для расчета Чс файла используется аглогитм SumOfBigEndian16BitNotPlusOne. 
+3. **SumOfBigEndian16BitNotPlusOne** Для расчета ЧC файла используется аглогитм SumOfBigEndian16BitNotPlusOne. 
 
 ## Консольного приложение 
 >[!WARNING]
